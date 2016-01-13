@@ -35,7 +35,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :zerotier, Zerotier.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
+  username: System.get_env("USER"),
   password: "postgres",
   database: "zerotier_dev",
   hostname: "localhost",

@@ -1,0 +1,2 @@
+<h1>Showing Users</h1>
+<b><%= @user.name %></b> (<%= @user.id %>)

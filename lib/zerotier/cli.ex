@@ -48,6 +48,6 @@ defmodule Zerotier.CLI do
 	def print_status({:ok, :online}, ip_address), do: IO.puts "Zerotier at #{ip_address} is Online."
 	def print_status({:ok, :offline}, ip_address), do: IO.puts "Zerotier at #{ip_address} is Offline."
 	def print_status({:ok, status}, ip_address), do: IO.puts "Zerotier status for #{ip_address} is #{status}."
-	def print_status({:ok, reason}, ip_address), do: IO.puts(:stderr, "Node at #{ip_address} has Error Message: " <> reason)
+	def print_status({:error, reason}, ip_address), do: IO.puts(:stderr, "Node at #{ip_address} has Error Message: " <> reason)
 
 end

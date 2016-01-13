@@ -20,7 +20,9 @@ defmodule Zerotier.Mixfile do
   def application do
     [mod: {Zerotier, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :porcelain, :httpoison]]
+                    :phoenix_ecto, :postgrex,
+                    :porcelain, :httpoison, :comeonin]
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,7 +42,8 @@ defmodule Zerotier.Mixfile do
      {:cowboy, "~> 1.0"},
      {:porcelain, "~> 2.0"},
      {:httpoison, "~> 0.8"},
-     {:jsx, "~> 2.8"}]
+     {:jsx, "~> 2.8"},
+     {:comeonin, "~> 2.0.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
