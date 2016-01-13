@@ -13,9 +13,27 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 
+// Import ReactJs
+import React from "react"
+import ReactDOM from "react-dom"
+
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+
+
+// Example for ReactJs
+class HelloWorld extends React.Component {
+  render() {
+    return (<h1>Hello World!</h1>)
+  }
+}
+
+ReactDOM.render(
+  <HelloWorld/>,
+  document.getElementById("hello-world")
+)
