@@ -1,0 +1,9 @@
+<h1>Showing Member</h1>
+
+<div><%= gettext "Address" %>: <%= @network_member.address %></div>
+<div><%= gettext "Network" %>: <%= @network_member.nwid %></div>
+<div><%= gettext "Authorized" %>: <%= @network_member.authorized %></div>
+<div><%= gettext "Bridge (Active)" %>: <%= @network_member.activeBridge %></div>
+<div><%= gettext "IP Assigned" %>: <%= @network_member.ipAssignments %></div>
+<div><%= gettext "Clock" %>: <%= @network_member.clock %></div>
+<div><%= gettext "Revision" %>: <%= @network_member.memberRevision %></div>

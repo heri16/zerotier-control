@@ -1,6 +1,5 @@
 defmodule Zerotier.UserView do
   use Zerotier.Web, :view
-  alias Zerotier.User
 
   def first_name(%{name: name}) do
     name

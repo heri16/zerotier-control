@@ -2,7 +2,7 @@ defmodule Zerotier.User do
   use Zerotier.Web, :model
 
   # Note: Struct is automatically defined
-  #defstruct [:id, :name, :username, :password
+  #defstruct [:id, :name, :username, :password]
 
   # Note: Primary key is automatically defined
   schema "users" do
@@ -19,6 +19,7 @@ defmodule Zerotier.User do
     model
     |> cast(params, ~w(name username), [])
     |> validate_length(:username, min: 4, max: 20)
+    |> unique_constraint(:username)
   end
 
   def registration_changeset(model, params) do

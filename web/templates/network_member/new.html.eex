@@ -1,0 +1,27 @@
+<%= form_for @changeset, network_member_path(@conn, :create), fn f -> %>
+  <%= if f.errors != [] do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below:</p>
+      <ul>
+        <%= for {attr, message} <- f.errors do %>
+          <li><%= humanize(attr) %> <%= translate_error(message) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= text_input f, :nwid, placeholder: "Network ID", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= text_input f, :address, placeholder: "Node Address", class: "form-control" %>
+  </div>
+  <div class="form-inline">
+    <%= label f, :authorized, "Authorized?", class: "label label-default" %>
+    <div class="form-group">
+      <%= checkbox f, :authorized, class: "checkbox-inline" %>
+    </div>
+  </div>
+
+  <%= submit "Create", class: "btn btn-primary" %>
+<% end %>

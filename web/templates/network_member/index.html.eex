@@ -1,0 +1,12 @@
+<h1>Listing Members</h1>
+
+<table class="table">
+  <%= for member <- @network_members do %>
+    <tr>
+      <td><b><%= member.address %></b> (<%= member.nwid %>)</td>
+      <td><%= link "View", to: network_member_path(@conn, :show, member.id) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<td><%= link "Add", to: network_member_path(@conn, :new) %></td>
