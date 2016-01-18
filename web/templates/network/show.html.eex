@@ -1,0 +1,68 @@
+<h2>Show network</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @network.name %>
+  </li>
+
+  <li>
+    <strong>Private:</strong>
+    <%= @network.private %>
+  </li>
+
+  <li>
+    <strong>Enablebroadcast:</strong>
+    <%= @network.enableBroadcast %>
+  </li>
+
+  <li>
+    <strong>Allowpassivebridging:</strong>
+    <%= @network.allowPassiveBridging %>
+  </li>
+
+  <li>
+    <strong>V4assignmode:</strong>
+    <%= @network.v4AssignMode %>
+  </li>
+
+  <li>
+    <strong>V6assignmode:</strong>
+    <%= @network.v6AssignMode %>
+  </li>
+
+  <li>
+    <strong>Multicastlimit:</strong>
+    <%= @network.multicastLimit %>
+  </li>
+
+  <li>
+    <strong>Creationtime:</strong>
+    <%= @network.creationTime %>
+  </li>
+
+  <li>
+    <strong>Revision:</strong>
+    <%= @network.revision %>
+  </li>
+
+  <li>
+    <strong>Memberrevisioncounter:</strong>
+    <%= @network.memberRevisionCounter %>
+  </li>
+
+  <li>
+    <strong>Clock:</strong>
+    <%= @network.clock %>
+  </li>
+
+  <li>
+    <strong>Authorizedmembercount:</strong>
+    <%= @network.authorizedMemberCount %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: network_path(@conn, :edit, @network) %>
+<%= link "Back", to: network_path(@conn, :index) %>

@@ -1,0 +1,48 @@
+<h2>Listing networks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Private</th>
+      <th>Enablebroadcast</th>
+      <th>Allowpassivebridging</th>
+      <th>V4assignmode</th>
+      <th>V6assignmode</th>
+      <th>Multicastlimit</th>
+      <th>Creationtime</th>
+      <th>Revision</th>
+      <th>Memberrevisioncounter</th>
+      <th>Clock</th>
+      <th>Authorizedmembercount</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for network <- @networks do %>
+    <tr>
+      <td><%= network.name %></td>
+      <td><%= network.private %></td>
+      <td><%= network.enableBroadcast %></td>
+      <td><%= network.allowPassiveBridging %></td>
+      <td><%= network.v4AssignMode %></td>
+      <td><%= network.v6AssignMode %></td>
+      <td><%= network.multicastLimit %></td>
+      <td><%= network.creationTime %></td>
+      <td><%= network.revision %></td>
+      <td><%= network.memberRevisionCounter %></td>
+      <td><%= network.clock %></td>
+      <td><%= network.authorizedMemberCount %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: network_path(@conn, :show, network), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: network_path(@conn, :edit, network), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: network_path(@conn, :delete, network), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New network", to: network_path(@conn, :new) %>

@@ -23,6 +23,7 @@ defmodule Zerotier.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/networks", NetworkController
     resources "/network_members", NetworkMemberController, only: [:index, :new, :create, :show, :delete]
   end
 

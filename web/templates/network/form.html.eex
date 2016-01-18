@@ -1,0 +1,83 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :private, class: "control-label" %>
+    <%= checkbox f, :private, class: "form-control" %>
+    <%= error_tag f, :private %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :enableBroadcast, class: "control-label" %>
+    <%= checkbox f, :enableBroadcast, class: "form-control" %>
+    <%= error_tag f, :enableBroadcast %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :allowPassiveBridging, class: "control-label" %>
+    <%= checkbox f, :allowPassiveBridging, class: "form-control" %>
+    <%= error_tag f, :allowPassiveBridging %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :v4AssignMode, class: "control-label" %>
+    <%= text_input f, :v4AssignMode, class: "form-control" %>
+    <%= error_tag f, :v4AssignMode %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :v6AssignMode, class: "control-label" %>
+    <%= text_input f, :v6AssignMode, class: "form-control" %>
+    <%= error_tag f, :v6AssignMode %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :multicastLimit, class: "control-label" %>
+    <%= number_input f, :multicastLimit, class: "form-control" %>
+    <%= error_tag f, :multicastLimit %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :creationTime, class: "control-label" %>
+    <%= number_input f, :creationTime, class: "form-control" %>
+    <%= error_tag f, :creationTime %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :revision, class: "control-label" %>
+    <%= number_input f, :revision, class: "form-control" %>
+    <%= error_tag f, :revision %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :memberRevisionCounter, class: "control-label" %>
+    <%= number_input f, :memberRevisionCounter, class: "form-control" %>
+    <%= error_tag f, :memberRevisionCounter %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :clock, class: "control-label" %>
+    <%= number_input f, :clock, class: "form-control" %>
+    <%= error_tag f, :clock %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :authorizedMemberCount, class: "control-label" %>
+    <%= number_input f, :authorizedMemberCount, class: "form-control" %>
+    <%= error_tag f, :authorizedMemberCount %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
