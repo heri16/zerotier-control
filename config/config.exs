@@ -35,8 +35,7 @@ config :porcelain,
 # Configure Zerotier One API
 config :zerotier, Zerotier.One.Service,
   api_host: "127.0.0.1",
-  api_port: 9993,
-  api_auth_token: File.read!(System.get_env("HOME") <> "/Library/Application Support/ZeroTier/One/authtoken.secret")
+  api_port: 9993
 config :zerotier, Zerotier.One.Controller,
   api_host: "127.0.0.1",
   api_port: 9994,

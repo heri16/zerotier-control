@@ -11,7 +11,7 @@ defmodule Zerotier.NetworkController do
   end
 
   def new(conn, _params) do
-    empty_rules = for n <- 1..3, do: %Network.Rule{}
+    empty_rules = for n <- 1..3, do: %Network.Rule{ ruleNo: n*10 }
     changeset = Network.changeset(%Network{ ipLocalRoutes: [""], ipAssignmentPools: [%Network.IpAssignmentPool{}], rules: empty_rules })
     render(conn, "new.html", changeset: changeset)
   end
@@ -21,13 +21,17 @@ defmodule Zerotier.NetworkController do
 
     case Repo.insert(changeset) do
       {:ok, network} ->
-        backend_network =
-          network
-          |> update_backend_sync
+        case update_backend(network) do
+          {:ok, _backend_network} ->
+            conn
+            |> put_flash(:info, "Network created successfully.")
+            |> redirect(to: network_path(conn, :index))
+          {:error, backend_error} ->
+            conn
+            |> put_flash(:error, backend_error)
+            |> redirect(to: network_path(conn, :index))
+        end
 
-        conn
-        |> put_flash(:info, "Network created successfully.")
-        |> redirect(to: network_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -35,31 +39,35 @@ defmodule Zerotier.NetworkController do
 
   def show(conn, %{"id" => id}) do
     network = Repo.get!(Network, id)
-    fetched_network = fetch_backend(network)
+    fetched_network = preload_backend(network)
     render(conn, "show.html", network: fetched_network)
   end
 
   def edit(conn, %{"id" => id}) do
     network = Repo.get!(Network, id)
-    fetched_network = fetch_backend(network)
+    fetched_network = preload_backend(network)
     changeset = Network.changeset(fetched_network)
     render(conn, "edit.html", network: fetched_network, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "network" => network_params}) do
     network = Repo.get!(Network, id)
-    fetched_network = fetch_backend(network)
+    fetched_network = preload_backend(network)
     changeset = Network.changeset(fetched_network, network_params)
 
     case Repo.update(changeset) do
       {:ok, network} ->
-        backend_network =
-          network
-          |> update_backend_sync
-
-        conn
-        |> put_flash(:info, "Network updated successfully.")
-        |> redirect(to: network_path(conn, :show, network))
+        case update_backend(network) do
+          {:ok, _backend_network} ->
+            conn
+            |> put_flash(:info, "Network updated successfully.")
+            |> redirect(to: network_path(conn, :show, network))
+          {:error, backend_error} ->
+            conn
+            |> put_flash(:error, backend_error)
+            |> redirect(to: network_path(conn, :show, network))
+        end
+        
       {:error, changeset} ->
         render(conn, "edit.html", network: network, changeset: changeset)
     end
@@ -72,20 +80,24 @@ defmodule Zerotier.NetworkController do
     # it to always work (and if it does not, it will raise).
     Repo.delete!(network)
 
-    network
-    |> delete_backend_sync
-
-    conn
-    |> put_flash(:info, "Network deleted successfully.")
-    |> redirect(to: network_path(conn, :index))
+    case delete_backend(network) do
+      {:ok, _backend_network} ->
+        conn
+        |> put_flash(:info, "Network deleted successfully.")
+        |> redirect(to: network_path(conn, :index))
+      {:error, backend_error} ->
+        conn
+        |> put_flash(:error, backend_error)
+        |> redirect(to: network_path(conn, :index))
+    end
   end
 
   
-  def fetch_backend(network = %Network{}) do
-    backend_task = Task.async(fn -> fetch_backend_sync(network) end)
+  def preload_backend(network = %Network{}) do
+    backend_task = Task.async(fn -> fetch_backend(network) end)
 
     case Task.yield(backend_task, 5000) do
-      {:ok, backend_network = %{} } ->
+      {:ok, {:ok, backend_network = %{}} } ->
         case Network.deserialization_changeset(network, backend_network) do
           valid_changeset = %{valid?: true} ->
             valid_changeset |> Ecto.Changeset.apply_changes
@@ -93,32 +105,23 @@ defmodule Zerotier.NetworkController do
             IO.inspect(invalid_changeset)
             network
         end
-      _ ->
+      {:ok, {:error, backend_error} } ->
+        raise backend_error
+      _timeout ->
         network
     end
   end
 
-  def fetch_backend_sync(%Network{ nwid: nwid }) do
+  def fetch_backend(%Network{ nwid: nwid }) do
     Zerotier.One.Controller.fetch_network(nwid)
   end
 
-  def update_backend_sync(network = %Network{ nwid: nwid }) do
-    json = network |> Poison.encode!
-
-    "http://127.0.0.1:9994/controller/network/#{nwid}"
-    |> HTTPoison.post(json, [ {"Accept", "application/json"}, { "X-ZT1-Auth", "crm3h7bXRwfrg1LGra06b5zc" } ])
-    |> handle_response
-    |> Poison.decode!
+  def update_backend(network = %Network{ nwid: nwid }) do
+    Zerotier.One.Controller.update_network(nwid, network)
   end
 
-  defp handle_response({:ok, %{status_code: 200, body: body} }), do: body
-
-  def delete_backend_sync(network = %Network{ nwid: nwid }) do
-    json = network |> Poison.encode!
-
-    "http://127.0.0.1:9994/controller/network/#{nwid}"
-    |> HTTPoison.delete([ {"Accept", "application/json"}, { "X-ZT1-Auth", "crm3h7bXRwfrg1LGra06b5zc" } ])
-    |> handle_response
+  def delete_backend(%Network{ nwid: nwid }) do
+    Zerotier.One.Controller.delete_network(nwid)
   end
 
 end
