@@ -9,7 +9,7 @@
     <h4>Menu</h4>
     <ul>
       <li>
-        <%= link "Manage ZeroTier One Network", to: network_member_path(@conn, :index) %>
+        <%= link "Manage ZeroTier One Networks", to: network_path(@conn, :index) %>
       </li>
     </ul>
   </div>

@@ -6,75 +6,103 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
+    <%= label f, :nwid, gettext("Network ID"), class: "control-label" %>
+    <%= text_input f, :nwid, class: "form-control" %>
+    <%= error_tag f, :nwid %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :name, gettext("Network Name"), class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :private, class: "control-label" %>
+    <%= label f, :private, gettext("Private?"), class: "control-label" %>
     <%= checkbox f, :private, class: "form-control" %>
     <%= error_tag f, :private %>
   </div>
 
   <div class="form-group">
-    <%= label f, :enableBroadcast, class: "control-label" %>
+    <%= label f, :enableBroadcast, gettext("Enable Broadcast?"), class: "control-label" %>
     <%= checkbox f, :enableBroadcast, class: "form-control" %>
     <%= error_tag f, :enableBroadcast %>
   </div>
 
   <div class="form-group">
-    <%= label f, :allowPassiveBridging, class: "control-label" %>
+    <%= label f, :allowPassiveBridging, gettext("Allow Bridging (Passive)?"), class: "control-label" %>
     <%= checkbox f, :allowPassiveBridging, class: "form-control" %>
     <%= error_tag f, :allowPassiveBridging %>
   </div>
 
   <div class="form-group">
-    <%= label f, :v4AssignMode, class: "control-label" %>
-    <%= text_input f, :v4AssignMode, class: "form-control" %>
+    <%= label f, :v4AssignMode, gettext("IPv4 Assignment Mode"), class: "control-label" %>
+    <%= select f, :v4AssignMode, v4AssignMode_options(), class: "form-control" %>
     <%= error_tag f, :v4AssignMode %>
   </div>
 
   <div class="form-group">
-    <%= label f, :v6AssignMode, class: "control-label" %>
-    <%= text_input f, :v6AssignMode, class: "form-control" %>
+    <%= label f, :v6AssignMode, gettext("IPv6 Assignment Mode"), class: "control-label" %>
+    <%= select f, :v6AssignMode, v6AssignMode_options(), class: "form-control" %>
     <%= error_tag f, :v6AssignMode %>
   </div>
 
   <div class="form-group">
-    <%= label f, :multicastLimit, class: "control-label" %>
+    <%= label f, :multicastLimit, gettext("Multicast Limit"), class: "control-label" %>
     <%= number_input f, :multicastLimit, class: "form-control" %>
     <%= error_tag f, :multicastLimit %>
   </div>
 
   <div class="form-group">
-    <%= label f, :creationTime, class: "control-label" %>
-    <%= number_input f, :creationTime, class: "form-control" %>
-    <%= error_tag f, :creationTime %>
+    <%= label f, :ipLocalRoutes, gettext("IP Local Routes"), class: "control-label" %>
+    <%= inputs_for_list f, :ipLocalRoutes, fn r -> %>
+      <%= text_input r, :nil, id: r.id, name: r.name, placeholder: gettext("%{sample} - IP Subnet #%{index}", index: r.index+1, sample: "10.0.0.0/24"), class: "form-control" %>
+    <% end %>
+    <%= error_tag f, :ipLocalRoutes %>
   </div>
 
   <div class="form-group">
-    <%= label f, :revision, class: "control-label" %>
-    <%= number_input f, :revision, class: "form-control" %>
-    <%= error_tag f, :revision %>
+    <%= label f, :ipAssignmentPools, gettext("IP Assignment Pools"), class: "control-label" %>
+    <%= inputs_for f, :ipAssignmentPools, fn fp -> %>
+      <div class="form-group">
+        <%= label fp, :ipRangeStart, "Pool ##{fp.index + 1}", class: "control-label" %>
+        <%= text_input fp, :ipRangeStart, placeholder: gettext("%{sample} - IP Range Start", sample: "10.0.0.5"), class: "form-control" %>
+        <%= error_tag fp, :ipRangeStart %>
+        <%= text_input fp, :ipRangeEnd, placeholder: gettext("%{sample} - IP Range End", sample: "10.0.0.254"), class: "form-control" %>
+        <%= error_tag fp, :ipRangeEnd %>
+      </div>
+    <% end %>
+    <%= error_tag f, :ipAssignmentPools %>
   </div>
 
   <div class="form-group">
-    <%= label f, :memberRevisionCounter, class: "control-label" %>
-    <%= number_input f, :memberRevisionCounter, class: "form-control" %>
-    <%= error_tag f, :memberRevisionCounter %>
+    <%= label f, :rules, gettext("Network Rules"), class: "control-label" %>
+    <%= inputs_for f, :rules, fn fr -> %>
+      <div class="form-group">
+        <%= label fr, :ruleNo, "Rule ##{fr.index + 1}", class: "control-label" %>
+        <%= text_input fr, :ruleNo, placeholder: gettext("%{sample} - Sort order", sample: "10"), class: "form-control" %>
+        <%= error_tag fr, :ruleNo %>
+        <%= select fr, :etherType, rule_etherType_options(), class: "form-control" %>
+        <%= error_tag fr, :etherType %>
+        <%= select fr, :action, rule_action_options(), class: "form-control" %>
+        <%= error_tag fr, :action %>
+      </div>
+    <% end %>
+    <%= error_tag f, :relays %>
   </div>
 
   <div class="form-group">
-    <%= label f, :clock, class: "control-label" %>
-    <%= number_input f, :clock, class: "form-control" %>
-    <%= error_tag f, :clock %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :authorizedMemberCount, class: "control-label" %>
-    <%= number_input f, :authorizedMemberCount, class: "form-control" %>
-    <%= error_tag f, :authorizedMemberCount %>
+    <%= label f, :relays, gettext("Network Relays"), class: "control-label" %>
+    <%= inputs_for f, :relays, fn fr -> %>
+      <div class="form-group">
+        <%= label fr, :address, "Relay ##{fr.index + 1}", class: "control-label" %>
+        <%= text_input fr, :address, placeholder: gettext("%{sample} - 10-digit ZeroTier address", sample: "949ed28bc1"), class: "form-control" %>
+        <%= error_tag fr, :address %>
+        <%= text_input fr, :phyAddress, placeholder: gettext("%{sample} - Fixed path address in IP/port format", sample: "192.168.1.1/9993"), class: "form-control" %>
+        <%= error_tag fr, :phyAddress %>
+      </div>
+    <% end %>
+    <%= error_tag f, :relays %>
   </div>
 
   <div class="form-group">

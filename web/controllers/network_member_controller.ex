@@ -27,14 +27,22 @@ defmodule Zerotier.NetworkMemberController do
     network_member = Repo.get(Zerotier.NetworkMember, id)
     backend_task = Task.async(fn -> fetch_backend(network_member) end)
 
-    filled_network_member = case Task.yield(backend_task, 5000) do
+    loaded_network_member = case Task.yield(backend_task, 5000) do
       {:ok, backend_network_member = %{} } ->
-        network_member
-        |> NetworkMember.update_with_unsafe_map(backend_network_member)
+        case network_member |>  NetworkMember.changeset(backend_network_member) do
+          valid_changeset = %{valid?: true} ->
+            valid_changeset |> Ecto.Changeset.apply_changes
+          invalid_changeset ->
+            IO.inspect(invalid_changeset)
+            network_member
+        end
       _ ->
         network_member 
     end
-    render(conn, "show.html", network_member: filled_network_member)
+
+    IO.inspect loaded_network_member
+
+    render(conn, "show.html", network_member: loaded_network_member)
   end
 
   def new(conn, %{"nwid" => nwid}) do

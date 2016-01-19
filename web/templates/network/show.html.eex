@@ -3,62 +3,118 @@
 <ul>
 
   <li>
-    <strong>Name:</strong>
+    <strong>ID:</strong>
+    <%= @network.nwid %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Name") %>:</strong>
     <%= @network.name %>
   </li>
 
   <li>
-    <strong>Private:</strong>
+    <strong><%= gettext("Private") %>:</strong>
     <%= @network.private %>
   </li>
 
   <li>
-    <strong>Enablebroadcast:</strong>
+    <strong><%= gettext("Enable Broadcast") %>:</strong>
     <%= @network.enableBroadcast %>
   </li>
 
   <li>
-    <strong>Allowpassivebridging:</strong>
+    <strong><%= gettext("Allow Bridging (Passive)") %>:</strong>
     <%= @network.allowPassiveBridging %>
   </li>
 
   <li>
-    <strong>V4assignmode:</strong>
+    <strong><%= gettext("IPv4 Assign-mode") %>:</strong>
     <%= @network.v4AssignMode %>
   </li>
 
   <li>
-    <strong>V6assignmode:</strong>
+    <strong><%= gettext("IPv6 Assign-mode") %>:</strong>
     <%= @network.v6AssignMode %>
   </li>
 
   <li>
-    <strong>Multicastlimit:</strong>
+    <strong><%= gettext("Multicast Limit") %>:</strong>
     <%= @network.multicastLimit %>
   </li>
 
+  <hr/>
+
   <li>
-    <strong>Creationtime:</strong>
+    <strong><%= gettext("IP Local Routes") %>:</strong>
+    <%= if length(@network.ipLocalRoutes) == 0, do: "None" %>
+    <ol>
+      <%= for ip_local_route <- @network.ipLocalRoutes do %>
+        <li><%= ip_local_route %></li>
+      <% end %>
+    </ol>
+  </li>
+
+  <li>
+    <strong><%= gettext("IP Assignment Pools") %>:</strong>
+    <%= if length(@network.ipAssignmentPools) == 0, do: "None" %>
+    <ol>
+      <%= for ip_assignment_pool <- @network.ipAssignmentPools do %>
+        <li>From <%= ip_assignment_pool.ipRangeStart %> to <%= ip_assignment_pool.ipRangeEnd %></li>
+      <% end %>
+    </ol>
+  </li>
+
+  <li>
+    <strong><%= gettext("Rules") %>:</strong>
+    <%= if length(@network.rules) == 0, do: "None" %>
+    <ol>
+      <%= for relay <- @network.rules do %>
+        <li>
+          <% relay_string = for field <- [:ruleNo, :etherType, :action] do 
+              %{^field => value} = relay
+              "#{field}: #{value}"
+            end
+          %>
+          <%= Enum.join(relay_string, " | ") %>
+        </li>
+      <% end %>
+    </ol>
+  </li>
+
+  <li>
+    <strong><%= gettext("Relays") %>:</strong>
+    <%= if length(@network.relays) == 0, do: "None" %>
+    <ol>
+      <%= for relay <- @network.relays do %>
+        <li>Node <%= relay.address %> @ <%= relay.phyAddress %></li>
+      <% end %>
+    </ol>
+  </li>
+
+  <hr/>
+
+  <li>
+    <strong><%= gettext("Creation Time") %>:</strong>
     <%= @network.creationTime %>
   </li>
 
   <li>
-    <strong>Revision:</strong>
-    <%= @network.revision %>
-  </li>
-
-  <li>
-    <strong>Memberrevisioncounter:</strong>
-    <%= @network.memberRevisionCounter %>
-  </li>
-
-  <li>
-    <strong>Clock:</strong>
+    <strong><%= gettext("Clock") %>:</strong>
     <%= @network.clock %>
   </li>
 
   <li>
-    <strong>Authorizedmembercount:</strong>
+    <strong><%= gettext("Revision") %>:</strong>
+    <%= @network.revision %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Member Revision Counter") %>:</strong>
+    <%= @network.memberRevisionCounter %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Authorized Member Count") %>:</strong>
     <%= @network.authorizedMemberCount %>
   </li>
 

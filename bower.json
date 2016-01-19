@@ -1,0 +1,23 @@
+{
+  "name": "zerotier-control",
+  "description": "",
+  "main": "",
+  "authors": [
+    "heri16 <heri16@github.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/heri16/zerotier-control",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.5.0",
+    "awesome-bootstrap-checkbox": "~0.3.5"
+  }
+}

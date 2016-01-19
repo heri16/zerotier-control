@@ -9,6 +9,6 @@ defmodule Zerotier.Repo.Migrations.CreateNetworkMember do
       timestamps
     end
 
-    create unique_index(:network_members, [:nwid, :address])
+    create unique_index(:network_members, [:nwid, :address], name: :network_members_nwid_address_index)
   end
 end

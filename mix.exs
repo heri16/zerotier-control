@@ -42,8 +42,8 @@ defmodule Zerotier.Mixfile do
      {:cowboy, "~> 1.0"},
      {:porcelain, "~> 2.0"},
      {:httpoison, "~> 0.8"},
-     {:jsx, "~> 2.8"},
-     {:comeonin, "~> 2.0.1"}]
+     {:jsx, ">= 2.8.0"},
+     {:comeonin, ">= 2.0.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

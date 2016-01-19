@@ -3,6 +3,7 @@
   "dependencies": {
     "babel-brunch": "^6.0.0",
     "babel-preset-react": "^6.3.13",
+    "bower": "^1.7.2",
     "brunch": "^2.1.1",
     "clean-css-brunch": ">= 1.0 < 1.8",
     "css-brunch": ">= 1.0 < 1.8",

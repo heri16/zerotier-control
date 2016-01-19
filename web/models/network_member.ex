@@ -19,28 +19,21 @@ defmodule Zerotier.NetworkMember do
     timestamps
   end
 
+  @required_fields ~w(nwid address authorized)
+  @optional_fields ~w(activeBridge clock identity ipAssignments memberRevision)
+
+  @doc """
+  Creates a changeset based on the `model` and `params`.
+
+  If no params are provided, an invalid changeset is returned
+  with no validation performed.
+  """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(nwid address authorized), [])
+    |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:nwid, is: 16)
     |> validate_length(:address, is: 10)
     |> unique_constraint(:address, name: :network_members_nwid_address_index)
-    |> check_with_backend
   end
 
-  def check_with_backend(changeset) do
-    # First check changeset is valid, so we won't waste time hashing an invalid.
-    case changeset do
-      %{valid?: true, changes: %{address: _address}} ->
-        #Zerotier.One.Controller.authorize_network_member(nwid, address, "crm3h7bXRwfrg1LGra06b5zc")
-        changeset
-      _ ->
-        # If changeset not valid, simply return to caller
-        changeset
-    end
-  end
-
-  def update_with_unsafe_map(model, %{"authorized" => authorized, "activeBridge" => activeBridge, "clock" => clock, "identity" => identity, "ipAssignments" => ipAssignments, "memberRevision" => memberRevision}) do
-    %{ model |  authorized: authorized, activeBridge: activeBridge, clock: clock, identity: identity, ipAssignments: ipAssignments, memberRevision: memberRevision }
-  end
 end
