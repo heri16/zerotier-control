@@ -7,13 +7,13 @@
 
   <div class="form-group">
     <%= label f, :nwid, gettext("Network ID"), class: "control-label" %>
-    <%= text_input f, :nwid, class: "form-control" %>
+    <%= text_input f, :nwid, placeholder: gettext("16-digit hex network ID"), class: "form-control" %>
     <%= error_tag f, :nwid %>
   </div>
 
   <div class="form-group">
     <%= label f, :name, gettext("Network Name"), class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
+    <%= text_input f, :name, placeholder: gettext("Descriptive Name"), class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 

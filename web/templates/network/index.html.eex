@@ -18,6 +18,7 @@
       <td><%= network.nwid %></td>
 
       <td class="text-right">
+        <%= link "Members", to: network_member_path(@conn, :index, %{nwid: network.nwid}), class: "btn btn-default btn-xs" %>
         <%= link "Show", to: network_path(@conn, :show, network), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: network_path(@conn, :edit, network), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: network_path(@conn, :delete, network), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
@@ -27,4 +28,4 @@
   </tbody>
 </table>
 
-<%= link "New network", to: network_path(@conn, :new) %>
+<%= link gettext("New network"), to: network_path(@conn, :new) %>

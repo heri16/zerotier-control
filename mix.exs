@@ -21,7 +21,7 @@ defmodule Zerotier.Mixfile do
     [mod: {Zerotier, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex,
-                    :porcelain, :httpoison, :comeonin]
+                    :porcelain, :httpoison, :comeonin, :tzdata]
     ]
   end
 
@@ -42,8 +42,8 @@ defmodule Zerotier.Mixfile do
      {:cowboy, "~> 1.0"},
      {:porcelain, "~> 2.0"},
      {:httpoison, "~> 0.8"},
-     {:jsx, ">= 2.8.0"},
-     {:comeonin, ">= 2.0.1"}]
+     {:comeonin, ">= 2.0.1"},
+     {:timex, "~> 1.0.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

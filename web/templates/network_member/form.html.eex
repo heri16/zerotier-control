@@ -1,0 +1,43 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, gettext("Network"), class: "control-label" %>
+    <%= select f, :nwid, @networks, class: "form-control" %>
+    <%= error_tag f, :nwid %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :address, gettext("Node Address"), class: "control-label" %>
+    <%= text_input f, :address, placeholder: gettext("10-digit hex ZeroTier address"), class: "form-control" %>
+    <%= error_tag f, :address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :authorized, gettext("Authorized?"), class: "control-label" %>
+    <%= checkbox f, :authorized, class: "form-control" %>
+    <%= error_tag f, :authorized %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :activeBridge, gettext("Bridge (Active)?"), class: "control-label" %>
+    <%= checkbox f, :activeBridge, class: "form-control" %>
+    <%= error_tag f, :activeBridge %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :ipAssignments, gettext("IP Assignments"), class: "control-label" %>
+    <%= inputs_for_list f, :ipAssignments, fn r -> %>
+      <%= text_input r, :nil, id: r.id, name: r.name, placeholder: gettext("%{sample} - IP #%{index}", index: r.index+1, sample: "10.0.0.11"), class: "form-control" %>
+    <% end %>
+    <%= error_tag f, :ipAssignments %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

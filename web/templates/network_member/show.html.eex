@@ -1,9 +1,67 @@
-<h1>Showing Member</h1>
+<h2>Show network member</h2>
 
-<div><%= gettext "Address" %>: <%= @network_member.address %></div>
-<div><%= gettext "Network" %>: <%= @network_member.nwid %></div>
-<div><%= gettext "Authorized" %>: <%= @network_member.authorized %></div>
-<div><%= gettext "Bridge (Active)" %>: <%= @network_member.activeBridge %></div>
-<div><%= gettext "IP Assigned" %>: <%= @network_member.ipAssignments %></div>
-<div><%= gettext "Clock" %>: <%= @network_member.clock %></div>
-<div><%= gettext "Revision" %>: <%= @network_member.memberRevision %></div>
+<ul>
+
+  <li>
+    <strong><%= gettext("Network ID") %>:</strong>
+    <%= @network_member.nwid %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Address") %>:</strong>
+    <%= @network_member.address %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Authorized") %>:</strong>
+    <%= @network_member.authorized %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Bridge (Active)") %>:</strong>
+    <%= @network_member.activeBridge %>
+  </li>
+
+  <hr/>
+
+  <li>
+    <strong><%= gettext("IP Assignments") %>:</strong>
+    <%= if length(@network_member.ipAssignments) == 0, do: "None" %>
+    <ol>
+      <%= for ip_assignment <- @network_member.ipAssignments do %>
+        <li><%= ip_assignment %></li>
+      <% end %>
+    </ol>
+  </li>
+
+  <li>
+    <strong><%= gettext("Recent Log") %>:</strong>
+    <%= if length(@network_member.recentLog) == 0, do: "None" %>
+    <ol>
+      <%= for log <- @network_member.recentLog do %>
+        <li><%= timestamp_to_string(log["ts"]) %> | v<%= log["version"] %> | <%= not log["authorized"] %> | <%= log["fromAddr"] %></li>
+      <% end %>
+    </ol>
+  </li>
+
+  <hr/>
+
+  <li>
+    <strong><%= gettext("Clock") %>:</strong>
+    <%= @network_member.clock %>
+  </li>
+  
+  <li>
+    <strong><%= gettext("Member Revision") %>:</strong>
+    <%= @network_member.memberRevision %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Identity") %>:</strong>
+    <div class="node-identity"><%= @network_member.identity %></div>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: network_member_path(@conn, :edit, @network_member) %> |
+<%= link "Back", to: network_member_path(@conn, :index) %>

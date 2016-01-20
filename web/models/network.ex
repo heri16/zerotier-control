@@ -7,7 +7,7 @@ defmodule Zerotier.Network do
   See: https://github.com/zerotier/ZeroTierOne/tree/master/service
   """
 
-  @required_fields ~w(name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode multicastLimit ipLocalRoutes)
+  @required_fields ~w(nwid name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode multicastLimit relays ipLocalRoutes ipAssignmentPools rules)
   @optional_fields ~w(creationTime clock revision memberRevisionCounter authorizedMemberCount)
   @embeds_many_fields ~w(ipAssignmentPools rules relays)a
   @writable_json_fields ~w(name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode multicastLimit relays ipLocalRoutes ipAssignmentPools rules)a
@@ -58,12 +58,6 @@ defmodule Zerotier.Network do
     |> validate_length(:ipLocalRoutes, min: 1)
     |> validate_number(:multicastLimit, greater_than: 0)
     |> unique_constraint(:nwid, name: :networks_pkey)
-  end
-
-  def creation_changeset(model, params \\ :empty) do
-    model
-    |> cast(params, ~w(nwid), [])
-    |> changeset(params)
   end
 
   def deserialization_changeset(model, params \\ :empty) do

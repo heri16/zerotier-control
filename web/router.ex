@@ -16,15 +16,13 @@ defmodule Zerotier.Router do
 
   scope "/", Zerotier do
     pipe_through :browser # Use the default browser stack
-    
-    #get "/users", UserController, :index
-    #get "/users/:id", UserController, :show
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/networks", NetworkController
-    resources "/network_members", NetworkMemberController, only: [:index, :new, :create, :show, :delete]
+    resources "/network_members", NetworkMemberController
+    get "/networks/:nwid/members", NetworkMemberController, :index
   end
 
   # Other scopes may use custom stacks.

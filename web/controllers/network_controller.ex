@@ -17,7 +17,7 @@ defmodule Zerotier.NetworkController do
   end
 
   def create(conn, %{"network" => network_params}) do
-    changeset = Network.creation_changeset(%Network{}, network_params)
+    changeset = Network.changeset(%Network{}, network_params)
 
     case Repo.insert(changeset) do
       {:ok, network} ->

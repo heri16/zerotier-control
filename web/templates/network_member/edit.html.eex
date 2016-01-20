@@ -1,7 +1,7 @@
-<h2>New network member</h2>
+<h2>Edit network member</h2>
 
 <%= render "form.html", changeset: @changeset,
                         networks: @networks,
-                        action: network_member_path(@conn, :create) %>
+                        action: network_member_path(@conn, :update, @network_member) %>
 
 <%= link "Back", to: network_member_path(@conn, :index) %>

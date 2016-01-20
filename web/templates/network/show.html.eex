@@ -3,7 +3,7 @@
 <ul>
 
   <li>
-    <strong>ID:</strong>
+    <strong><%= gettext("ID") %>:</strong>
     <%= @network.nwid %>
   </li>
 
@@ -120,5 +120,6 @@
 
 </ul>
 
-<%= link "Edit", to: network_path(@conn, :edit, @network) %>
+<%= link "Edit", to: network_path(@conn, :edit, @network) %> |
+<%= link "Show Members", to: network_member_path(@conn, :index, %{nwid: @network.nwid}) %> |
 <%= link "Back", to: network_path(@conn, :index) %>

@@ -1,12 +1,34 @@
-<h1>Listing Members</h1>
+<h2>Listing network members</h2>
 
 <table class="table">
-  <%= for member <- @network_members do %>
+  <thead>
     <tr>
-      <td><b><%= member.address %></b> (<%= member.nwid %>)</td>
-      <td><%= link "View", to: network_member_path(@conn, :show, member.id) %></td>
+      <th><%= gettext("Network Name") %></th>
+      <th><%= gettext("Address") %></th>
+      <th><%= gettext("Authorized") %></th>
+      <th><%= gettext("Bridge") %></th>
+      <th><%= gettext("Ip Assigned") %></th>
+
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+<%= for network_member <- @network_members do %>
+    <tr>
+      <td><%= List.keyfind(@networks, network_member.nwid, 1, {"<Unknown>"}) |> elem(0) %></td>
+      <td><%= network_member.address %></td>
+      <td><%= network_member.authorized %></td>
+      <td><%= network_member.activeBridge %></td>
+      <td><%= network_member.ipAssignments %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: network_member_path(@conn, :show, network_member), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: network_member_path(@conn, :edit, network_member), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: network_member_path(@conn, :delete, network_member), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
 </table>
 
-<td><%= link "Add", to: network_member_path(@conn, :new) %></td>
+<%= link gettext("New network member"), to: network_member_path(@conn, :new) %>
