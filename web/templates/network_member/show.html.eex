@@ -39,7 +39,7 @@
     <%= if length(@network_member.recentLog) == 0, do: "None" %>
     <ol>
       <%= for log <- @network_member.recentLog do %>
-        <li><%= timestamp_to_string(log["ts"]) %> | v<%= log["version"] %> | <%= not log["authorized"] %> | <%= log["fromAddr"] %></li>
+        <li><%= epoch_timestamp_to_string(log["ts"]) %> | v<%= log["version"] %> | <%= not log["authorized"] %> | <%= log["fromAddr"] %></li>
       <% end %>
     </ol>
   </li>

@@ -2,7 +2,7 @@ defmodule Zerotier.NetworkMemberView do
   use Zerotier.Web, :view
   use Timex
 
-  def timestamp_to_string(milliseconds) do
+  def epoch_timestamp_to_string(milliseconds) do
     milliseconds
     |> Date.from(:msecs)
     |> Date.local
