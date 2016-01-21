@@ -2,7 +2,10 @@ defmodule Zerotier.One.Controller do
   use HTTPoison.Base
 
   @api_auth_header "X-ZT1-Auth"
-  @api_auth_token_file_paths ["/var/lib/zerotier-one/authtoken.secret", System.get_env("HOME") <> "/Library/Application Support/ZeroTier/One/authtoken.secret"]
+  @api_auth_token_file_paths [
+      "/var/lib/zerotier-one/authtoken.secret",
+      System.get_env("HOME") <> "/Library/Application Support/ZeroTier/One/authtoken.secret"
+    ]
 
   @config Application.get_env(:zerotier, Zerotier.One.Controller, [])
   @api_host Keyword.get(@config, :api_host, "127.0.0.1")
@@ -36,12 +39,14 @@ defmodule Zerotier.One.Controller do
   end
 
   defp process_request_headers(headers) when is_map(headers) do
-    Enum.into(headers, [ {"Accept", "application/json"} ])
+    headers
+    |> Enum.into([ {"Accept", "application/json"} ])
     |> append_auth_header(@api_auth_token)
   end
 
   defp process_request_headers(headers) do
-    ([ {"Accept", "application/json"} ] ++ headers)
+    headers = [ {"Accept", "application/json"} ] ++ headers
+    headers
     |> append_auth_header(@api_auth_token)
   end
 
@@ -86,8 +91,9 @@ defmodule Zerotier.One.Controller do
   """
   @spec list_network_members(binary) :: {:ok, [binary]} | {:error, any}
   def list_network_members(nwid) do
-    result = 
-      network_member_api_url(nwid)
+    url = network_member_api_url(nwid)
+    result =
+      url
       |> get()
       |> handle_response()
 
@@ -120,11 +126,10 @@ defmodule Zerotier.One.Controller do
   """
   @spec fetch_network(binary) :: {:ok, map} | {:error, any}
   def fetch_network(nwid) do
-    network_api_url(nwid)
+    url = network_api_url(nwid)
+    url
     |> get()
     |> handle_response()
-
-    
   end
 
   @doc """
@@ -150,7 +155,8 @@ defmodule Zerotier.One.Controller do
   """
   @spec update_network(binary, any) :: {:ok, map} | {:error, any}
   def update_network(nwid, changes) do
-    network_api_url(nwid)
+    url = network_api_url(nwid)
+    url
     |> post(changes)
     |> handle_response()
   end
@@ -160,7 +166,8 @@ defmodule Zerotier.One.Controller do
   """
   @spec delete_network(binary) :: {:ok, map} | {:error, any}
   def delete_network(nwid) do
-    network_api_url(nwid)
+    url = network_api_url(nwid)
+    url
     |> delete()
     |> handle_response()
   end
@@ -181,7 +188,8 @@ defmodule Zerotier.One.Controller do
   """
   @spec fetch_network_member(binary, binary) :: {:ok, map} | {:error, any}
   def fetch_network_member(nwid, naddress) do
-    network_member_api_url(nwid, naddress)
+    url = network_member_api_url(nwid, naddress)
+    url
     |> get()
     |> handle_response()
   end
@@ -202,7 +210,8 @@ defmodule Zerotier.One.Controller do
   """
   @spec update_network_member(binary, binary, any) :: {:ok, map} | {:error, any}
   def update_network_member(nwid, naddress, changes) do
-    network_member_api_url(nwid, naddress)
+    url = network_member_api_url(nwid, naddress)
+    url
     |> post(changes)
     |> handle_response()
   end
@@ -212,7 +221,8 @@ defmodule Zerotier.One.Controller do
   """
   @spec delete_network_member(binary, binary) :: {:ok, map} | {:error, any}
   def delete_network_member(nwid, naddress) do
-    network_member_api_url(nwid, naddress)
+    url = network_member_api_url(nwid, naddress)
+    url
     |> delete()
     |> handle_response()
   end

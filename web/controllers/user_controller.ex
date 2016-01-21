@@ -10,7 +10,7 @@ defmodule Zerotier.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get(Zerotier.User, id)  
+    user = Repo.get(Zerotier.User, id)
     render(conn, "show.html", user: user)
   end
 
@@ -31,7 +31,7 @@ defmodule Zerotier.UserController do
         |> put_flash(:info, "#{user.name} created!")
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
-        # Return user to new.html after the Repo module has 
+        # Return user to new.html after the Repo module has
         # populated the changeset with failed validations.
         render(conn, "new.html", changeset: changeset)
     end

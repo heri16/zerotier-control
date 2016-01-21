@@ -3,7 +3,7 @@ defmodule Zerotier.NetworkView do
 
   def v4AssignMode_options() do
     [
-      { gettext("None"), "none" }, 
+      { gettext("None"), "none" },
       { gettext("Managed (by ZT-controller)"), "zt" },
       { gettext("DHCP"), "dhcp" }
     ]
@@ -11,8 +11,8 @@ defmodule Zerotier.NetworkView do
 
   def v6AssignMode_options() do
     [
-      { gettext("None"), "none" }, 
-      { gettext("Automatic (RFC4193-based)"), "rfc4193" }, 
+      { gettext("None"), "none" },
+      { gettext("Automatic (RFC4193-based)"), "rfc4193" },
       { gettext("Managed (by ZT-controller)"), "zt" },
       { gettext("DHCP"), "dhcp" }
     ]
@@ -20,7 +20,7 @@ defmodule Zerotier.NetworkView do
 
   def rule_etherType_options() do
     [
-      { gettext("Internet Protocol version 4 (IPv4)"), 2048 }, 
+      { gettext("Internet Protocol version 4 (IPv4)"), 2048 },
       { gettext("Address Resolution Protocol (ARP)"), 2054 },
       { gettext("Reverse Address Resolution Protocol"), 32821 },
       { gettext("Internet Protocol Version 6 (IPv6)"), 34525 },
@@ -31,7 +31,7 @@ defmodule Zerotier.NetworkView do
 
   def rule_action_options() do
     [
-      { gettext("Accept"), "accept" }, 
+      { gettext("Accept"), "accept" },
       { gettext("Drop"), "drop" }
     ]
   end
@@ -122,5 +122,3 @@ defmodule Zerotier.NetworkView do
   end
 
 end
-
-

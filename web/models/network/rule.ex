@@ -24,7 +24,10 @@ defmodule Zerotier.Network.Rule do
   end
 
   @required_fields ~w(ruleNo etherType action)
-  @optional_fields ~w(nodeId sourcePort destPort vlanId vlanPcp etherType macSource macDest ipSource ipDest ipTos ipProtocol ipSourcePort ipDestPort)
+  @optional_fields ~w(
+      nodeId sourcePort destPort vlanId vlanPcp etherType macSource macDest
+      ipSource ipDest ipTos ipProtocol ipSourcePort ipDestPort
+    )
 
   @doc """
   Creates a changeset based on the `model` and `params`.

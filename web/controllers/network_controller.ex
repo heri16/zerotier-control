@@ -12,7 +12,8 @@ defmodule Zerotier.NetworkController do
 
   def new(conn, _params) do
     empty_rules = for n <- 1..3, do: %Network.Rule{ ruleNo: n*10 }
-    changeset = Network.changeset(%Network{ ipLocalRoutes: [""], ipAssignmentPools: [%Network.IpAssignmentPool{}], rules: empty_rules })
+    new_network = %Network{ ipLocalRoutes: [""], ipAssignmentPools: [%Network.IpAssignmentPool{}], rules: empty_rules }
+    changeset = Network.changeset(new_network)
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -67,7 +68,7 @@ defmodule Zerotier.NetworkController do
             |> put_flash(:error, backend_error)
             |> redirect(to: network_path(conn, :show, network))
         end
-        
+
       {:error, changeset} ->
         render(conn, "edit.html", network: network, changeset: changeset)
     end
@@ -92,7 +93,7 @@ defmodule Zerotier.NetworkController do
     end
   end
 
-  
+
   def preload_backend(network = %Network{}) do
     backend_task = Task.async(fn -> fetch_backend(network) end)
 

@@ -1,7 +1,10 @@
 defmodule Zerotier do
   use Application
 
-  @windows_node :"windows@WIN-HUIM0CD4J2N"
+  @moduledoc """
+  """
+
+  @windows_node :"windows@11.1.1.1"
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -29,7 +32,8 @@ defmodule Zerotier do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Zerotier.Supervisor]
 
-    Supervisor.start_link(children, opts)
+    children
+    |> Supervisor.start_link(opts)
     |> handle_start_supervisor(start_more_children?)
   end
 
@@ -56,9 +60,10 @@ defmodule Zerotier do
   @spec start_other_children(Supervisor.t) :: Supervisor.on_start_child
   def start_other_children(supervisor_server) do
     import Supervisor.Spec, warn: false
-    
+
     # Start Registry process on local node
-    {:ok, registry_pid} = Supervisor.start_child(supervisor_server, worker(Zerotier.Registry, [ [name: :"Zerotier.ProcessRegistry"] ]))
+    {:ok, registry_pid} = Supervisor.start_child(supervisor_server,
+      worker(Zerotier.Registry, [ [name: :"Zerotier.ProcessRegistry"] ]))
 
     # Start Powershell supervisor process on which node?
     target_supervisor_server = case Node.ping(@windows_node) do

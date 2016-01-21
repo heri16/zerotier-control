@@ -7,10 +7,16 @@ defmodule Zerotier.Network do
   See: https://github.com/zerotier/ZeroTierOne/tree/master/service
   """
 
-  @required_fields ~w(nwid name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode multicastLimit relays ipLocalRoutes ipAssignmentPools rules)
+  @writable_json_fields ~w(
+      name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode
+      multicastLimit relays ipLocalRoutes ipAssignmentPools rules
+    )a
+  @required_fields ~w(
+      nwid name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode
+      multicastLimit relays ipLocalRoutes ipAssignmentPools rules
+    )
   @optional_fields ~w(creationTime clock revision memberRevisionCounter authorizedMemberCount)
   @embeds_many_fields ~w(ipAssignmentPools rules relays)a
-  @writable_json_fields ~w(name private enableBroadcast allowPassiveBridging v4AssignMode v6AssignMode multicastLimit relays ipLocalRoutes ipAssignmentPools rules)a
 
   @v4_assign_modes ["none", "zt", "dhcp"]
   @v6_assign_modes ["none", "zt", "rfc4193", "dhcp"]
@@ -92,7 +98,7 @@ defmodule Zerotier.Network do
     # Restore the "id" field to all objects inside this list
     params
     |> Map.update(Atom.to_string(field), [], fn embeds_many_params ->
-        embeds_many_params |> Enum.with_index |> Enum.map(fn {each_embed, index} -> 
+        embeds_many_params |> Enum.with_index |> Enum.map(fn {each_embed, index} ->
           case Enum.fetch(model_embeds, index) do
             {:ok, _emb = %{id: id} } -> each_embed |> Map.put_new("id", id)
             :error -> each_embed

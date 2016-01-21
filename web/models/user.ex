@@ -15,7 +15,7 @@ defmodule Zerotier.User do
   end
 
   def changeset(model, params \\ :empty) do
-    # Pass :empty to Ecto for a blank new changeset 
+    # Pass :empty to Ecto for a blank new changeset
     model
     |> cast(params, ~w(name username), [])
     |> validate_length(:username, min: 4, max: 20)

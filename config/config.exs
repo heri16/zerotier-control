@@ -32,6 +32,18 @@ config :phoenix, :generators,
 config :porcelain,
   goon_warn_if_missing: false
 
+# Config Dogma Linter
+config :dogma,
+  # Pick paths not to lint
+  exclude: [
+    ~r(node_modules/),
+    ~r(test/),
+  ],
+  # Override an existing rule configuration
+  override: %{
+    LineLength => [ max_length: 130 ]
+  }
+
 # Configure Zerotier One API
 config :zerotier, Zerotier.One.Service,
   api_host: "127.0.0.1",

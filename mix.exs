@@ -43,7 +43,8 @@ defmodule Zerotier.Mixfile do
      {:porcelain, "~> 2.0"},
      {:httpoison, "~> 0.8"},
      {:comeonin, ">= 2.0.1"},
-     {:timex, "~> 1.0.0"}]
+     {:timex, "~> 1.0.0"},
+     {:dogma, "~> 0.0", only: :dev}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

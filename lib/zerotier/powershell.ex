@@ -97,9 +97,14 @@ defmodule Zerotier.Powershell do
   def fetch_status(pid, ip_address, username) when is_pid(pid) do
     icmp_status = fetch_icmp_status(pid, ip_address)
     is_icmp_alive? = case icmp_status do
-        {:ok, :alive} -> IO.puts "Node at #{ip_address} is Alive."; true
-        {:ok, :dead} -> IO.puts "Node at #{ip_address} is Dead."; false
-        {:error, _reason} -> false
+        {:ok, :alive} ->
+          IO.puts "Node at #{ip_address} is Alive."
+          true
+        {:ok, :dead} ->
+          IO.puts "Node at #{ip_address} is Dead."
+          false
+        {:error, _reason} ->
+          false
     end
     if is_icmp_alive? do
       zt_status = fetch_zt_status(pid, ip_address, username)
@@ -111,9 +116,14 @@ defmodule Zerotier.Powershell do
   def fetch_status(proc = %Proc{}, ip_address, username) do
     icmp_status = fetch_icmp_status(proc, ip_address)
     is_icmp_alive? = case icmp_status do
-        {:ok, :alive} -> IO.puts "Node at #{ip_address} is Alive."; true
-        {:ok, :dead} -> IO.puts "Node at #{ip_address} is Dead."; false
-        {:error, _reason} -> false
+        {:ok, :alive} ->
+          IO.puts "Node at #{ip_address} is Alive."
+          true
+        {:ok, :dead} ->
+          IO.puts "Node at #{ip_address} is Dead."
+          false
+        {:error, _reason} ->
+          false
     end
     if is_icmp_alive? do
       zt_status = fetch_zt_status(proc, ip_address, username)
@@ -303,12 +313,12 @@ defmodule Zerotier.Powershell do
   def handle_info({pid, :data, :out, <<0>>}, state = %{accumulator: accumulator, clients: _clients = [client | other_clients], proc: _proc = %Proc{pid: pid}}) do
     output = accumulator |> Enum.reverse |> Enum.join
     case GenServer.reply(client, output) do
-      :ok -> {:noreply, %{state | accumulator: [], clients: other_clients} }  
+      :ok -> {:noreply, %{state | accumulator: [], clients: other_clients} }
       _ -> {:noreply, %{state | accumulator: [<<0>> | accumulator], clients: other_clients} }
     end
   end
   def handle_info({pid, :data, :out, "\r\n"}, state = %{accumulator: [], proc: _proc = %Proc{pid: pid}}) do
-    # Discards first linebreak 
+    # Discards first linebreak
     {:noreply, state}
   end
   def handle_info({pid, :data, :out, data}, state = %{accumulator: accumulator, proc: _proc = %Proc{pid: pid}}) when is_binary(data) do
@@ -350,7 +360,7 @@ defmodule Zerotier.Powershell do
       <<0>> ->
         # Output ready
         output = acc_tail |> Enum.reverse |> Enum.join
-        {:reply, output, %{state | accumulator: []} }  
+        {:reply, output, %{state | accumulator: []} }
       _ ->
         # Output not ready
         {:noreply, %{state | clients: clients ++ [from]} }

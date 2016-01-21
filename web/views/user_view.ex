@@ -6,5 +6,5 @@ defmodule Zerotier.UserView do
     |> String.split(" ")
     |> Enum.at(0)
   end
-  
+
 end

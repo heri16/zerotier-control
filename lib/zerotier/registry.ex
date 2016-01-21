@@ -22,7 +22,7 @@ defmodule Zerotier.Registry do
     start_link([name: process_name, table_name: process_name])
   end
   def start_link(_options = []) do
-    start_link([name: @via_default_registry, table_name: @via_default_registry]) 
+    start_link([name: @via_default_registry, table_name: @via_default_registry])
   end
 
   @doc """
