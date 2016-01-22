@@ -15,7 +15,7 @@ defmodule Zerotier.Powershell do
   """
 
   @powershell_arguments ["-NoProfile", "-NonInteractive", "-Command", "-"]
-  @fetch_icmp_status_timeout 5000
+  @fetch_icmp_status_timeout 10000
   @fetch_zt_status_timeout 10000
   @sync_execute_command_timeout 10000
   @get_last_output_timeout 5000
@@ -147,6 +147,7 @@ defmodule Zerotier.Powershell do
     cond do
       (Regex.match?(~r/average/iu, output)) -> {:ok, :alive}
       (Regex.match?(~r/100% loss/iu, output)) -> {:ok, :dead}
+      (Regex.match?(~r/unreachable/iu, output)) -> {:ok, :dead}
       true -> {:error, output}
     end
   end
@@ -156,6 +157,7 @@ defmodule Zerotier.Powershell do
     cond do
       (Regex.match?(~r/average/iu, output)) -> {:ok, :alive}
       (Regex.match?(~r/100% loss/iu, output)) -> {:ok, :dead}
+      (Regex.match?(~r/unreachable/iu, output)) -> {:ok, :dead}
       true -> {:error, output}
     end
   end
