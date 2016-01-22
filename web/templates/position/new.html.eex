@@ -1,0 +1,6 @@
+<h2>New position</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: position_path(@conn, :create) %>
+
+<%= link "Back", to: position_path(@conn, :index, @conn.params) %>

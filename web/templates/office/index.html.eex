@@ -1,0 +1,32 @@
+<h2>Listing offices</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Type</th>
+      <th>Company</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for office <- @offices do %>
+    <tr>
+      <td><%= office.name %></td>
+      <td><%= office.location %></td>
+      <td><%= office.type %></td>
+      <td><%= List.keyfind(@companies, office.company_id, 1, {"<Unknown>"}) |> elem(0) %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: office_path(@conn, :show, office), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: office_path(@conn, :edit, office), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: office_path(@conn, :delete, office), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New office", to: office_path(@conn, :new, @conn.params) %>

@@ -8,10 +8,11 @@ defmodule Zerotier.ErrorHelpers do
   @doc """
   Generates tag for inlined form input errors.
   """
-  def error_tag(form, field) do
+  def error_tag(form, field, opts \\ []) do
     error = form.errors[field]
     if error do
-      content_tag :span, translate_error(error), class: "help-block"
+      prepend = (if opts[:prepend], do: opts[:prepend] <> " ", else: "")
+      content_tag :span, prepend <> translate_error(error), class: "help-block"
     end
   end
 

@@ -1,0 +1,6 @@
+<h2>New department</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: department_path(@conn, :create) %>
+
+<%= link "Back", to: department_path(@conn, :index, @conn.params) %>

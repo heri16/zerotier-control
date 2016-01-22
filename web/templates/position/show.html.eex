@@ -1,0 +1,23 @@
+<h2>Show position</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @position.name %>
+  </li>
+
+  <li>
+    <strong>Notes:</strong>
+    <%= @position.notes %>
+  </li>
+
+  <li>
+    <strong>Company:</strong>
+    <%= @position.company_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: position_path(@conn, :edit, @position) %>
+<%= link "Back", to: position_path(@conn, :index, %{company_id: @position.company_id} ) %>

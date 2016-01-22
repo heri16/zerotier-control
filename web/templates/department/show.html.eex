@@ -1,0 +1,18 @@
+<h2>Show department</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @department.name %>
+  </li>
+
+  <li>
+    <strong>Company:</strong>
+    <%= @department.company_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: department_path(@conn, :edit, @department) %>
+<%= link "Back", to: department_path(@conn, :index, %{company_id: @department.company_id} ) %>

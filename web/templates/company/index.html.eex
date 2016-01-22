@@ -1,0 +1,29 @@
+<h2>Listing companies</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for company <- @companies do %>
+    <tr>
+      <td><%= company.name %></td>
+
+      <td class="text-right">
+        <%= link "Offices", to: office_path(@conn, :index, %{company_id: company.id}), class: "btn btn-default btn-xs" %>
+        <%= link "Departments", to: department_path(@conn, :index, %{company_id: company.id}), class: "btn btn-default btn-xs" %>
+        <%= link "Positions", to: position_path(@conn, :index, %{company_id: company.id}), class: "btn btn-default btn-xs" %>
+        <%= link "Show", to: company_path(@conn, :show, company), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: company_path(@conn, :edit, company), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: company_path(@conn, :delete, company), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New company", to: company_path(@conn, :new) %>

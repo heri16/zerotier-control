@@ -22,6 +22,7 @@ defmodule Zerotier.Network do
   @v6_assign_modes ["none", "zt", "rfc4193", "dhcp"]
 
   @primary_key {:nwid, :string, []}
+  @foreign_key_type :string
   @derive {Phoenix.Param, key: :nwid}
   @derive {Poison.Encoder, only: @writable_json_fields}
   schema "networks" do

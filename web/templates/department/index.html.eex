@@ -1,0 +1,28 @@
+<h2>Listing departments</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Company</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for department <- @departments do %>
+    <tr>
+      <td><%= department.name %></td>
+      <td><%= List.keyfind(@companies, department.company_id, 1, {"<Unknown>"}) |> elem(0) %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: department_path(@conn, :show, department), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: department_path(@conn, :edit, department), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: department_path(@conn, :delete, department), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New department", to: department_path(@conn, :new, @conn.params) %>

@@ -1,0 +1,38 @@
+<h2>Show profile</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @profile.name %>
+  </li>
+
+  <li>
+    <strong>Notes:</strong>
+    <%= @profile.notes %>
+  </li>
+
+  <li>
+    <strong>Office:</strong>
+    <%= @profile.office_id %>
+  </li>
+
+  <li>
+    <strong>Department:</strong>
+    <%= @profile.department_id %>
+  </li>
+
+  <li>
+    <strong>Position:</strong>
+    <%= @profile.position_id %>
+  </li>
+
+  <li>
+    <strong>User:</strong>
+    <%= @profile.user_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: profile_path(@conn, :edit, @profile) %>
+<%= link "Back", to: profile_path(@conn, :index) %>

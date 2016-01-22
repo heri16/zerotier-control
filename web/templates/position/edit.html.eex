@@ -1,0 +1,6 @@
+<h2>Edit position</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: position_path(@conn, :update, @position) %>
+
+<%= link "Back", to: position_path(@conn, :index, %{company_id: @position.company_id}) %>

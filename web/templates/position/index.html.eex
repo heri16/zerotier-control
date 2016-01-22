@@ -1,0 +1,30 @@
+<h2>Listing positions</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Company</th>
+      <th>Notes</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for position <- @positions do %>
+    <tr>
+      <td><%= position.name %></td>
+      <td><%= List.keyfind(@companies, position.company_id, 1, {"<Unknown>"}) |> elem(0) %></td>
+      <td><%= position.notes %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: position_path(@conn, :show, position), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: position_path(@conn, :edit, position), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: position_path(@conn, :delete, position), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New position", to: position_path(@conn, :new, @conn.params) %>

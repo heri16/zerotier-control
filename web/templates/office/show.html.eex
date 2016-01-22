@@ -1,0 +1,28 @@
+<h2>Show office</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @office.name %>
+  </li>
+
+  <li>
+    <strong>Location:</strong>
+    <%= @office.location %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @office.type %>
+  </li>
+
+  <li>
+    <strong>Company:</strong>
+    <%= @office.company_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: office_path(@conn, :edit, @office) %>
+<%= link "Back", to: office_path(@conn, :index, %{company_id: @office.company_id} ) %>

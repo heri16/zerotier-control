@@ -23,6 +23,13 @@ defmodule Zerotier.Router do
     resources "/networks", NetworkController
     resources "/network_members", NetworkMemberController
     get "/networks/:nwid/members", NetworkMemberController, :index
+
+    resources "/tenants", TenantController
+    resources "/companies", CompanyController
+    resources "/offices", OfficeController
+    resources "/departments", DepartmentController
+    resources "/positions", PositionController
+    resources "/profiles", ProfileController
   end
 
   # Other scopes may use custom stacks.
