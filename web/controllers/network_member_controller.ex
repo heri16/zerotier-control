@@ -3,7 +3,6 @@ defmodule Zerotier.NetworkMemberController do
 
   alias Zerotier.NetworkMember
 
-  plug :authenticate when action in [:index, :show, :new, :create, :delete]
   plug :scrub_params, "network_member" when action in [:create, :update]
   plug :load_networks when action in [:index, :new, :create, :edit, :update]
 
@@ -127,20 +126,7 @@ defmodule Zerotier.NetworkMemberController do
     Zerotier.One.Controller.delete_network_member(nwid, address)
   end
 
-  defp authenticate(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      # Note how we used page_path instead of user_path
-      conn
-      |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: page_path(conn, :index))
-      |> halt()
-      # Stop conn to prevent downstream transformations
-    end
-  end
-
-  defp load_networks(conn, _) do
+  defp load_networks(conn, _opts) do
     networks = Repo.all(from n in Zerotier.Network, select: {n.name, n.nwid})
     assign(conn, :networks, networks)
   end

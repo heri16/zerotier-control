@@ -35,4 +35,4 @@
 </ul>
 
 <%= link "Edit", to: profile_path(@conn, :edit, @profile) %>
-<%= link "Back", to: profile_path(@conn, :index) %>
+<%= link "Back", to: profile_path(@conn, :index, %{company_id: @position.company_id} ) %>

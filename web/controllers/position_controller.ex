@@ -78,11 +78,11 @@ defmodule Zerotier.PositionController do
     |> redirect(to: position_path(conn, :index, %{company_id: position.company_id} ))
   end
 
-  defp load_companies(conn, %{"company_id" => company_id}) do
-    companies = Repo.one(from c in Zerotier.Company, where: c.company_id == ^company_id, select: {c.name, c.id})
-    assign(conn, :companies, companies)
+  defp load_companies(conn = %{params: %{"company_id" => company_id}}, _opts) do
+    company = Repo.one(from c in Zerotier.Company, where: c.id == ^company_id, select: {c.name, c.id})
+    assign(conn, :companies, [company])
   end
-  defp load_companies(conn, _params) do
+  defp load_companies(conn, _opts) do
     companies = Repo.all(from c in Zerotier.Company, select: {c.name, c.id})
     assign(conn, :companies, companies)
   end

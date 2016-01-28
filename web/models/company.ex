@@ -12,7 +12,7 @@ defmodule Zerotier.Company do
     timestamps
   end
 
-  @required_fields ~w(name)
+  @required_fields ~w(name tenant_id)
   @optional_fields ~w()
 
   @doc """

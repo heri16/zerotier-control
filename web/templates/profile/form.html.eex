@@ -12,6 +12,24 @@
   </div>
 
   <div class="form-group">
+    <%= label f, gettext("Offices"), class: "control-label" %>
+    <%= select f, :office_id, @offices, class: "form-control" %>
+    <%= error_tag f, :office_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, gettext("Departments"), class: "control-label" %>
+    <%= select f, :department_id, @departments, class: "form-control" %>
+    <%= error_tag f, :department_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, gettext("Positions"), class: "control-label" %>
+    <%= select f, :position_id, @positions, class: "form-control" %>
+    <%= error_tag f, :position_id %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :notes, class: "control-label" %>
     <%= textarea f, :notes, class: "form-control" %>
     <%= error_tag f, :notes %>

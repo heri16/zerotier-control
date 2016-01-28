@@ -3,6 +3,7 @@ defmodule Zerotier.TenantController do
 
   alias Zerotier.Tenant
 
+  plug :authenticate
   plug :scrub_params, "tenant" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -63,5 +64,26 @@ defmodule Zerotier.TenantController do
     conn
     |> put_flash(:info, "Tenant deleted successfully.")
     |> redirect(to: tenant_path(conn, :index))
+  end
+
+  defp authenticate(conn, _opts) do
+    case conn.assigns.current_user do
+      %Zerotier.User{id: 1} ->
+        conn
+      %Zerotier.User{} -> 
+        # Note how we used page_path instead of user_path
+        conn
+        |> put_flash(:error, "You do not have access rights for that page")
+        |> redirect(to: page_path(conn, :index))
+        |> halt()
+        # Stop conn to prevent downstream transformations
+      _others -> 
+        # Note how we used page_path instead of user_path
+        conn
+        |> put_flash(:error, "You must be logged in to access that page")
+        |> redirect(to: page_path(conn, :index))
+        |> halt()
+        # Stop conn to prevent downstream transformations
+    end
   end
 end

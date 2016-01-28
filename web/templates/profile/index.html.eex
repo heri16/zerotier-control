@@ -33,4 +33,4 @@
   </tbody>
 </table>
 
-<%= link "New profile", to: profile_path(@conn, :new) %>
+<%= link "New profile", to: profile_path(@conn, :new, @conn.params) %>

@@ -1,10 +1,27 @@
-<h1>Listing Users</h1>
+<h2>Listing Users</h2>
 
 <table class="table">
-  <%= for user <- @users do %>
+  <thead>
     <tr>
-      <td><%= render "user.html", user: user %></td>
-      <td><%= link "View", to: user_path(@conn, :show, user.id) %></td>
+      <th>Name</th>
+      <th>Username</th>
+
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+<%= for user <- @users do %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.username %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
 </table>
+
+<%= link "New user", to: user_path(@conn, :new) %>

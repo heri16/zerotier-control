@@ -8,6 +8,7 @@ defmodule Zerotier.Repo.Migrations.CreateCompany do
 
       timestamps
     end
+    create index(:companies, [:tenant_id])
 
   end
 end

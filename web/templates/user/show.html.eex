@@ -1,2 +1,27 @@
-<h1>Showing User</h1>
-<b><%= @user.name %></b> (<%= @user.id %>)
+<h2>Show user</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </li>
+
+  <li>
+    <strong>Username:</strong>
+    <%= @user.username %>
+  </li>
+
+  <li>
+    <strong>Tenant Name:</strong>
+    <%= @user.tenant.name %>
+  </li>
+
+  <li>
+    <strong>Tenant ID:</strong>
+    <%= @user.tenant.id %>
+  </li>
+
+</ul>
+
+<%= link "Back", to: user_path(@conn, :index) %>

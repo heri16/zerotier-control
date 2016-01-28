@@ -3,6 +3,11 @@
 <ul>
 
   <li>
+    <strong>ID:</strong>
+    <%= @tenant.id %>
+  </li>
+
+  <li>
     <strong>Name:</strong>
     <%= @tenant.name %>
   </li>

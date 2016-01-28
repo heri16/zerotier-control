@@ -1,6 +1,9 @@
 <h2>Edit profile</h2>
 
 <%= render "form.html", changeset: @changeset,
+                        offices: @offices,
+                        departments: @departments,
+                        positions: @positions,
                         action: profile_path(@conn, :update, @profile) %>
 
-<%= link "Back", to: profile_path(@conn, :index) %>
+<%= link "Back", to: profile_path(@conn, :index, %{company_id: @position.company_id} ) %>

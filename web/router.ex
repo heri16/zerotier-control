@@ -18,8 +18,9 @@ defmodule Zerotier.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :show, :new, :create]
+    resources "/users", UserController, only: [:index, :show, :new, :create, :delete]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+
     resources "/networks", NetworkController
     resources "/network_members", NetworkMemberController
     get "/networks/:nwid/members", NetworkMemberController, :index

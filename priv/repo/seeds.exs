@@ -13,13 +13,18 @@
 alias Zerotier.Repo
 
 alias Zerotier.Tenant
+alias Zerotier.User
 alias Zerotier.Company
 alias Zerotier.Office
 alias Zerotier.Department
 alias Zerotier.Position
 
-for tenant_id <- [Ecto.UUID.generate()] do
-  tenant = Repo.get_by(Tenant, id: tenant_id) || Repo.insert!(%Tenant{id: tenant_id, name: "Default"})
+for tenant_name <- ~w(Default) do
+  tenant = Repo.get_by(Tenant, name: tenant_name) || Repo.insert!(%Tenant{id: Ecto.UUID.generate(), name: tenant_name})
+  for username <- ~w(administrator) do
+    user_changeset = User.registration_changeset(%User{name: "Default-User", username: username, tenant_id: tenant.id}, %{"password" => username})
+    _user = Repo.get_by(User, username: username, tenant_id: tenant.id) || Repo.insert!(user_changeset)
+  end
   for company_name <- ~w(Default-Company) do
     company = Repo.get_by(Company, name: company_name, tenant_id: tenant.id) || Repo.insert!(%Company{name: company_name, tenant_id: tenant.id})
     for office_name <- ~w(Default-Office) do
